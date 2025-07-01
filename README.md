@@ -52,21 +52,7 @@
 
 ## 📁 Project Structure
 
-task-sync-social/
-├── public/ # Static assets
-├── src/
-│ ├── components/ # UI components
-│ ├── contexts/ # Auth/task state via Zustand
-│ ├── hooks/ # Custom hooks
-│ ├── integrations/ # Supabase client
-│ ├── lib/ # Utility functions
-│ ├── pages/ # Routing pages (login, dashboard)
-│ ├── types/ # Global TS types
-│ ├── App.tsx / main.tsx # App root & entry
-├── supabase/ # SQL, policies, schemas
-├── tailwind.config.ts # Tailwind setup
-├── vite.config.ts # Vite config
-└── tsconfig.json, .env, README.md
+<pre> task-sync-social/ ├── public/ # Static assets (favicon, etc.) ├── src/ │ ├── components/ # Reusable UI components (TaskCard, Button) │ ├── contexts/ # Global state (auth, tasks) using Zustand or React Context │ ├── hooks/ # Custom hooks (e.g. useTasks, useUser) │ ├── integrations/ # Supabase client and API methods │ ├── lib/ # Utility functions (e.g. date utils, validators) │ ├── pages/ # Pages (Login, Dashboard, etc.) │ ├── types/ # TypeScript types and interfaces │ ├── App.tsx # Root component │ ├── main.tsx # App entry point │ ├── index.css / App.css # Global styles ├── supabase/ # SQL dump, RLS policy notes, config ├── .env # Supabase URL and keys ├── .gitignore ├── tailwind.config.ts ├── vite.config.ts ├── tsconfig.json / node.json / app.json ├── bun.lockb / package-lock.json └── README.md </pre>
 
 yaml
 Copy
