@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
-import { Plus, Filter, Search, Bell, User, Settings } from 'lucide-react';
+import React, { useState } from 'react';
+import { Plus, Filter, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -9,86 +9,31 @@ import { TaskForm } from './TaskForm';
 import { TaskFilters } from './TaskFilters';
 import { AuthHeader } from './AuthHeader';
 import { Task, TaskPriority, TaskStatus } from '@/types/task';
+import { useTasks } from '@/hooks/useTasks';
 
 export const TaskDashboard = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const { tasks, loading, createTask, updateTask, deleteTask } = useTasks();
   const [showTaskForm, setShowTaskForm] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<'all' | TaskStatus>('all');
   const [selectedPriority, setSelectedPriority] = useState<'all' | TaskPriority>('all');
 
-  // Sample data for demo
-  useEffect(() => {
-    const sampleTasks: Task[] = [
-      {
-        id: '1',
-        title: 'Design system improvements',
-        description: 'Update the color palette and typography system',
-        status: 'in_progress',
-        priority: 'high',
-        dueDate: '2025-01-15',
-        category: 'Design',
-        assignedTo: 'John Doe',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: '2',
-        title: 'Implement user authentication',
-        description: 'Set up social login with Google, GitHub, and Facebook',
-        status: 'todo',
-        priority: 'high',
-        dueDate: '2025-01-10',
-        category: 'Development',
-        assignedTo: 'Jane Smith',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: '3',
-        title: 'Write API documentation',
-        description: 'Document all REST endpoints and WebSocket events',
-        status: 'completed',
-        priority: 'medium',
-        dueDate: '2025-01-05',
-        category: 'Documentation',
-        assignedTo: 'Mike Johnson',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    ];
-    setTasks(sampleTasks);
-  }, []);
-
-  const handleCreateTask = (taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => {
-    const newTask: Task = {
-      ...taskData,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-    setTasks(prev => [newTask, ...prev]);
+  const handleCreateTask = async (taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => {
+    await createTask(taskData);
     setShowTaskForm(false);
   };
 
-  const handleUpdateTask = (taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const handleUpdateTask = async (taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => {
     if (!editingTask) return;
     
-    const updatedTask: Task = {
-      ...taskData,
-      id: editingTask.id,
-      createdAt: editingTask.createdAt,
-      updatedAt: new Date().toISOString(),
-    };
-    
-    setTasks(prev => prev.map(task => task.id === editingTask.id ? updatedTask : task));
+    await updateTask(editingTask.id, taskData);
     setEditingTask(null);
     setShowTaskForm(false);
   };
 
-  const handleDeleteTask = (taskId: string) => {
-    setTasks(prev => prev.filter(task => task.id !== taskId));
+  const handleDeleteTask = async (taskId: string) => {
+    await deleteTask(taskId);
   };
 
   const handleEditTask = (task: Task) => {
@@ -111,6 +56,22 @@ export const TaskDashboard = () => {
     inProgress: tasks.filter(t => t.status === 'in_progress').length,
     todo: tasks.filter(t => t.status === 'todo').length,
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen">
+        <AuthHeader />
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-64">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading your tasks...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
