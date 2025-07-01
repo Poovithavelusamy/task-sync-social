@@ -1,6 +1,3 @@
----
-
-````markdown
 <h1 align="center">📝 Task Sync Social</h1>
 
 <p align="center">
