@@ -1,3 +1,6 @@
+---
+
+````markdown
 <h1 align="center">📝 Task Sync Social</h1>
 
 <p align="center">
@@ -15,8 +18,8 @@
 
 ## 🌍 Live Demo
 
-🔗 **Frontend:** [Click to open](https://your-frontend.vercel.app)  
-🎥 **Loom Demo:** [Watch now](https://loom.com/share/your-demo-link)
+🔗 **Frontend:** [https://task-sync-social.vercel.app](https://task-sync-social.vercel.app)  
+🎥 **Loom Demo:** [Watch now](https://www.loom.com/share/4bdaec3ec0274da5990ce20d87b23204?sid=8fe83ed5-08c0-442c-b723-2823b355bd7e)
 
 ---
 
@@ -52,11 +55,29 @@
 
 ## 📁 Project Structure
 
-<pre> task-sync-social/ ├── public/ # Static assets (favicon, etc.) ├── src/ │ ├── components/ # Reusable UI components (TaskCard, Button) │ ├── contexts/ # Global state (auth, tasks) using Zustand or React Context │ ├── hooks/ # Custom hooks (e.g. useTasks, useUser) │ ├── integrations/ # Supabase client and API methods │ ├── lib/ # Utility functions (e.g. date utils, validators) │ ├── pages/ # Pages (Login, Dashboard, etc.) │ ├── types/ # TypeScript types and interfaces │ ├── App.tsx # Root component │ ├── main.tsx # App entry point │ ├── index.css / App.css # Global styles ├── supabase/ # SQL dump, RLS policy notes, config ├── .env # Supabase URL and keys ├── .gitignore ├── tailwind.config.ts ├── vite.config.ts ├── tsconfig.json / node.json / app.json ├── bun.lockb / package-lock.json └── README.md </pre>
-
-yaml
-Copy
-Edit
+<pre>
+task-sync-social/
+├── public/                  # Static assets (favicon, etc.)
+├── src/
+│   ├── components/          # Reusable UI components (TaskCard, Button)
+│   ├── contexts/            # Global state (auth, tasks) using Zustand or React Context
+│   ├── hooks/               # Custom hooks (e.g. useTasks, useUser)
+│   ├── integrations/        # Supabase client and API methods
+│   ├── lib/                 # Utility functions (e.g. date utils, validators)
+│   ├── pages/               # Pages (Login, Dashboard, etc.)
+│   ├── types/               # TypeScript types and interfaces
+│   ├── App.tsx              # Root component
+│   ├── main.tsx             # App entry point
+│   ├── index.css / App.css  # Global styles
+├── supabase/                # SQL dump, RLS policy notes, config
+├── .env                     # Supabase URL and keys
+├── .gitignore
+├── tailwind.config.ts
+├── vite.config.ts
+├── tsconfig.json / node.json / app.json
+├── bun.lockb / package-lock.json
+└── README.md
+</pre>
 
 ---
 
@@ -64,21 +85,21 @@ Edit
 
 ### Table: `tasks`
 
-| Column      | Type      | Description                      |
-|-------------|-----------|----------------------------------|
-| `id`        | UUID      | Primary Key                      |
-| `user_id`   | UUID      | Owner (foreign key to auth.users)|
-| `title`     | Text      | Task title                       |
-| `description` | Text    | Task details                     |
-| `status`    | Enum      | pending / in_progress / done     |
-| `priority`  | Integer   | 1=High, 2=Medium, 3=Low           |
-| `due_date`  | Timestamp | Optional                         |
-| `shared_with` | Text[]  | Array of email strings            |
-| `created_at` | Timestamp| Default: now()                   |
+| Column         | Type      | Description                        |
+|----------------|-----------|------------------------------------|
+| `id`           | UUID      | Primary Key                        |
+| `user_id`      | UUID      | Owner (foreign key to auth.users)  |
+| `title`        | Text      | Task title                         |
+| `description`  | Text      | Task details                       |
+| `status`       | Enum      | pending / in_progress / done       |
+| `priority`     | Integer   | 1=High, 2=Medium, 3=Low             |
+| `due_date`     | Timestamp | Optional                           |
+| `shared_with`  | Text[]    | Array of email strings             |
+| `created_at`   | Timestamp | Default: now()                     |
 
 ✅ **RLS Policies**
-- Read: `user_id = auth.uid()` OR current user in `shared_with`
-- Write: Only task owner
+- **Read:** `user_id = auth.uid()` OR current user in `shared_with`
+- **Write:** Only task owner
 
 ---
 
@@ -104,41 +125,57 @@ npm install
 
 # 4. Run dev server
 npm run dev
-🌐 .env Format
-env
-Copy
-Edit
+````
+
+### 🌐 .env Format
+
+```env
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
-🧪 Key Screens
-/login → Google Sign In
+```
 
-/dashboard → Task list with filters
+---
 
-/task/:id → Edit & manage task
+## 🧪 Key Screens
 
-Modal → Share task by email
+* `/login` → Google Sign In
+* `/dashboard` → Task list with filters
+* `/task/:id` → Edit & manage task
+* `Modal` → Share task by email
 
-📌 Assumptions
-Only Google OAuth is implemented (GitHub/Facebook skipped for time)
+---
 
-Shared users must already exist in Supabase auth.users
+## 📌 Assumptions
 
-Basic offline support is implemented using localStorage
+* Only Google OAuth is implemented (GitHub/Facebook skipped for time)
+* Shared users must already exist in Supabase `auth.users`
+* Basic offline support is implemented using localStorage
 
-🎯 Future Enhancements
-✅ GitHub/Facebook OAuth
+---
 
-✅ Reminders via email/SMS
+## 🎯 Future Enhancements
 
-✅ Task analytics dashboard
+* ✅ GitHub/Facebook OAuth
+* ✅ Reminders via email/SMS
+* ✅ Task analytics dashboard
+* ✅ Drag & drop sorting
+* ✅ Role-based permissions (viewer, editor)
 
-✅ Drag & drop sorting
+---
 
-✅ Role-based permissions (viewer, editor)
+## 📽️ Loom Video
 
-📽️ Loom Video
-🎥 Click here to watch the full demo
+🎥 [Click here to watch the full demo](https://www.loom.com/share/4bdaec3ec0274da5990ce20d87b23204?sid=8fe83ed5-08c0-442c-b723-2823b355bd7e)
 
-🧑‍⚖️ License
+---
+
+## 🧑‍⚖️ License
+
 MIT
+
+```
+
+---
+
+Let me know if you’d like help generating a **Markdown badge** for your Loom video or want to embed the video thumbnail directly!
+```
