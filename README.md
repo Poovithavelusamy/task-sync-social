@@ -46,7 +46,7 @@
 
 ## 🖼️ Architecture Diagram
 
-> ![Architecture](./public/architecture diagram.png)
+![Architecture](./public/architecture%20diagram.png)
 
 ---
 
